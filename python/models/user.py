@@ -1,29 +1,42 @@
-# -*- coding: utf-8 -*-
-
-from util import validation
-
+import re
+from error import *
 
 
 class User:
     def __init__(self, name='', email='', discord_id=''):
         self.name = name
-        self.email = email
-        self.discord_id = discord_id
+        self.__email = email
+        self.__discord_id = discord_id
 
     @property
     def name(self):
-        return self._name
+        return self.__name
 
     @name.setter
     def name(self, value):
-        if isinstance(value, str):
-            value = value.upper()
-            self._name = value
-        else:
-            raise Exception('Invalid name!')
+        value = value.upper()
+        self.__name = value
+
+    @property
+    def email(self):
+        return self.__email
 
     @email.setter
-    def email(self,value):
-        validation.email_validation(value)
-        self.email = value
+    def email(self, value):
+        self.__email = value
 
+    @property
+    def discord_id(self):
+        return self.__discord_id
+
+    @discord_id.setter
+    def discod_id(self, value):
+        return self.__discord_id
+
+    def email_validacion(self):
+        regex = '^[a-z]+[\._]?[a-z]+[@]{1}[c]{3}[.][c-u]{4}[.][d-u]{3}[.][b-r]{2}$'
+        try:
+            if re.search(regex, self.__email):
+                email_error()
+        except EmailError as error:
+            print(error)
