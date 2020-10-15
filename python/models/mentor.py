@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from python.models.user import User
+from user import User
 
 
 class Mentor(User):
