@@ -13,23 +13,23 @@ class Project:
 
 	@property
 	def areas(self):
-		return self.areas
+		return self.__areas
 	
 	@areas.setter
 	def areas(self, areas):
 		if not (areas in ['front', 'back', 'cloud', 'testes', 'documentação', 'refactoring', 'design', 'análise de dados', 'scrapping', 'automação', 'bot', 'devops']):
 			raise Exception('Área Inválida')
-		self.areas = areas
+		self.__areas = areas
 
 	@property
 	def state(self):
-		return self.state
+		return self.__state
 		
 	@state.setter
     def state(self, state):
         if not (state in ['Em análise', 'Necessita Revisão', 'Pronto - Com sugestões', 'Pronto - Completo']):
             raise Exception('Estado Inválido')
-        self._state = state
+        self.__state = state
 		
 	def add_subscribers(self, key, value):
 		self.subscribers[key] = value
