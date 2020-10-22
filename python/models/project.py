@@ -1,10 +1,10 @@
 #coding: utf-8
+
 class Project:
-	def __init__(self, name, description, base_text, project_id, mentor, aux_mentor, areas):
+	def __init__(self, name, description, mentor, aux_mentor, base_text, areas):
 		self.name = name
 		self.description = description
 		self.base_text = base_text
-		self.project_id = project_id
 		self.mentor = mentor
 		self.aux_mentor = aux_mentor
 		self.areas = areas
@@ -12,75 +12,37 @@ class Project:
 		self.subscribers = {}
 
 	@property
-	def name(self):
-		return self.name
+	def areas(self):
+		return self._areas
 	
-	@name.setter
-	def name(self, name):
-		self.name = name
+	@areas.setter
+	def areas(self, areas):
+		if not (areas in ['front', 'back', 'cloud', 'testes', 'documentação', 'refactoring', 'design', 'análise de dados', 'scrapping', 'automação', 'bot', 'devops']):
+			raise Exception('Área Inválida')
+		self._areas = areas
 
 	@property
-	def description(self):
-		return self.description
-		
-	@description.setter
-	def description(self, description):
-		self.description = description
-	
-	@property
-	def base_text(self):
-		return self.base_text
-		
-	@description.setter
-	def base_text(self, base_text):
-		self.base_text = base_text
-	
-	@property
-	def project_id(self):
-		return self.project_id
-		
-	@description.setter
-	def project_id(self, project_id):
-		self.project_id = project_id
-	
-	@property
-	def mentor(self):
-		return self.mentor
-		
-	@description.setter
-	def mentor(self, mentor):
-		self.mentor = mentor
-	
-	@property
-	def aux_mentor(self):
-		return self.aux_mentor
-		
-	@description.setter
-	def aux_mentor(self, aux_mentor):
-		self.aux_mentor = aux_mentor
-	
-	@property
-	def areas(self):
-		return self.areas
-		
-	@description.setter
-	def areas(self, areas):
-		self.areas = areas
-	
-	@property
 	def state(self):
-		return self.state
+		return self._state
 		
-	@description.setter
+	@state.setter
 	def state(self, state):
-		self.state = state
-	
-	@property
-	def subscribers(self):
-		return self.subscribers
+		if not (state in ['Em análise', 'Necessita Revisão', 'Pronto - Com sugestões', 'Pronto - Completo']):
+			raise Exception('Estado Inválido')
+		self._state = state
 		
-	def add_subscribers(self, key, value):
-		self.subscribers[key] = value
+	def add_subscriber(self, key, value):
+		if key not in self.subscribers:
+			self.subscribers[key] = value
+		else:
+			key += 1
+			self.subscribers[key] = value
 	
-	def get_subscribers(self, key):
+	def get_subscriber(self, key):
 		return self.subscribers[key]
+	
+	def check_email(self, email):
+		mentor = self.mentor
+		if email == mentor["email"]:
+			return True
+		return False
