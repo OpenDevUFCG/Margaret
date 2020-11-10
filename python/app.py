@@ -3,8 +3,14 @@ from flask import Flask
 from python.models.subscribed import Subscribed
 from python.models.user import User
 from python.models.project import Project
+from python.ext.mentor import mentor
 
 app = Flask(__name__)
+
+def create_app():
+    app = Flask(__name__)
+    mentor.init_app(app)
+    return app
 
 
 @app.route('/', methods=['GET'])
