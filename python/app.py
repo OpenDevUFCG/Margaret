@@ -9,8 +9,6 @@ from python.ext.subscribed import subscribed
 
 from python.util.environment import get_env
 
-app = Flask(__name__)
-
 def create_app():
     app = Flask(__name__)
     organization.init_app(app)
@@ -19,4 +17,5 @@ def create_app():
     return app
 
 if __name__ == "__main__":
+    app = create_app()
     app.run(host=get_env("HOST"), port=get_env("PORT"))
