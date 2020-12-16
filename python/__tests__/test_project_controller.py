@@ -73,9 +73,11 @@ def test_remove_project_area():
     collections.add_project('Laguinho', '', '', '', '',
                             ['back', 'cloud', 'testes'])
 
-    collections.remove_project_area(1, 'cloud')
-    project = collections.projects[1]
+    area = collections.remove_project_area(1, 'cloud')
+    assert type(area) == str
+    assert area == 'cloud'
 
+    project = collections.projects[1]
     assert not 'cloud' in project.areas
 
 
@@ -85,10 +87,14 @@ def test_remove_project():
     collections.add_project('Margaret', '', '', '', '',
                             ['back', 'documentação', 'testes'])
 
-    project = collections.remove_project(1)
+    collections.add_project('RoadMap', '', '', '', '',
+                            ['back', 'documentação', 'front'])
 
+    project_removed = collections.projects[2]
+    assert collections.remove_project(2) == project_removed
+
+    project = collections.remove_project(1)
     assert not collections.projects
-    assert project.name == 'Margaret'
 
 
 def test_find_project_by_mentor():
