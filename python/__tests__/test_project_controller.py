@@ -1,5 +1,6 @@
 from python.controllers.project_controller import ProjectController
 from python.models.mentor import Mentor
+from pytest import fail
 
 
 def test_id_validation():

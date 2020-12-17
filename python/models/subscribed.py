@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from python.models.user import User
-from python.util import validation
+from python.util.validation import period_validation
 import json
 
 class Subscribed(User):
@@ -16,7 +16,7 @@ class Subscribed(User):
     
     @period.setter
     def period(self, value):
-        validation.period_validation(value)
+        period_validation(value)
         self._period = value
 
     
