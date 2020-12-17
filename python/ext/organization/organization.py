@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from python.models.organization import Organization
 from python.controllers.organization_controller import OrganizationController
 from python.models.user import User
+import json
 
 org = Blueprint('org', __name__, url_prefix='/organization')
 organization_controller = OrganizationController()
@@ -22,29 +23,32 @@ def list_orgs():
     orgs = organization_controller.list_organizations()
     
     for i in range(len(orgs)):
-        temp_org = orgs[i].__dict__
-        temp_owner = temp_org['owner']
-        if(isinstance(temp_owner, User)):
-            temp_owner = temp_owner.__dict__
-        temp_org['owner'] = temp_owner
-        response[i + 1] = temp_org
+        response[i + 1] = json.loads(orgs[i].to_json())
 
-    return jsonify(response)
-
+    return response
 
 @org.route('/', methods=['DELETE'])
 def remove_org():
     data = request.get_json()
-    return organization_controller.remove_organization(data['org_Id']).__dict__
+    return organization_controller.remove_organization(data['org_Id']).to_json()
     
-
 @org.route('/<int:org_id>', methods=['GET'])
 def get_org(org_id):
-    temp_org = organization_controller.get_organization(int(org_id)).__dict__
-    temp_owner = temp_org['owner']
+    return organization_controller.get_organization(int(org_id)).to_json()
 
-    if(isinstance(temp_owner, User)):
-        temp_owner = temp_owner.__dict__
+@org.route('/<int:org_id>', methods=['PATCH'])
+def update_org(org_id):
+    args = list(request.get_json().items())
+    return organization_controller.modify_organization_by_atribute(org_id, args[0][0], args[0][1]).to_json()
 
-    temp_org['owner'] = temp_owner
-    return temp_org
+@org.route('/search', methods=['GET'])
+def search_org():
+    args = list(request.args.to_dict().items())
+    search_result = organization_controller.find_organization_by_atribute(args[0][0], args[0][1])
+
+    response = {}
+    for i in range(len(search_result)):
+        response[i + 1] = json.loads(search_result[i].to_json())
+
+    return response
+    

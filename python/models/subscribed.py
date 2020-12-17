@@ -2,6 +2,7 @@
 
 from python.models.user import User
 from python.util.validation import period_validation
+import json
 
 class Subscribed(User):
     def __init__(self, name, email, discord_id, period, minority_group=''):
@@ -17,3 +18,8 @@ class Subscribed(User):
     def period(self, value):
         period_validation(value)
         self._period = value
+
+    
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+

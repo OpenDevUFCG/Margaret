@@ -1,5 +1,6 @@
 #coding: utf-8
 from python.models.organization import Organization
+from python.util.validation import validate_organization_existence
 import re
 
 class OrganizationController:
@@ -17,22 +18,22 @@ class OrganizationController:
         return org_id
 
     def remove_organization(self, org_id):
-        self.validate_organization_existence(org_id)
-
-        removed_organization = self.organizations[org_id]
+        removed_organization = self.get_organization(org_id)
         self.organizations.pop(org_id)
         return removed_organization
 
     def get_organization(self, org_id):
-        self.validate_organization_existence(org_id)
+        if not(org_id in self.organizations):
+            raise ValueError('Organização Inexistente')
         return self.organizations[org_id]
 
     def modify_organization_by_atribute(self, org_id, atribute, new_atribute_value):
         if not atribute in ['name', 'desc', 'owner', 'category', 'state']:
             raise AttributeError('Atributo Inválido')
 
-        organization = self.organizations[org_id]
+        organization = self.get_organization(org_id)
         setattr(organization, atribute, new_atribute_value)
+        return organization
 
     def find_organization_by_atribute(self, atribute, atribute_value):
         if not atribute in ['name', 'category', 'state', 'owner']:
@@ -52,7 +53,3 @@ class OrganizationController:
     def generate_organization_id(self):
         self.current_id += 1
         return self.current_id
-
-    def validate_organization_existence(self, org_id):
-        if not(org_id in self.organizations):
-            raise ValueError('Organização Inexistente')

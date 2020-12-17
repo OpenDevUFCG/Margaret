@@ -35,3 +35,7 @@ def discord_id_validation(value):
             return value
         
     raise AttributeError ("Discord inválido!")
+
+def validate_organization_existence(org_id, organizations):
+    if not(org_id in organizations):
+        raise ValueError('Organização Inexistente')

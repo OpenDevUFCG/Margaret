@@ -1,4 +1,5 @@
 #coding: utf-8
+import json
 class Organization:
 
     def __init__(self, name, desc, owner, category, org_id):
@@ -35,3 +36,6 @@ class Organization:
 
     def get_project(self, key):
         return self.projects[key]
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
