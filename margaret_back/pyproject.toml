@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "Margaret"
+version = "0.1.0"
+description = ""
+authors = ["Juan Barros <juan.barros@ccc.ufcg.edu.br>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+pytest = "^6.1.2"
+python-dotenv = "^0.15.0"
+flask-restx = "^0.2.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
