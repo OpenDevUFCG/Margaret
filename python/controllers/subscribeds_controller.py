@@ -22,8 +22,7 @@ class SubscribedsController:
         found_subscribers = []
         
         for sub in self.subscribers.values():        
-            print(sub.discord_id)
-
+            
             if value_attribute.upper() in getattr(sub,attribute).upper():
                 found_subscribers.append(sub)
             
@@ -44,16 +43,16 @@ class SubscribedsController:
        
         setattr(modified_sub,attribute,new_attribute)
         
-    def get_subscribed(self,email_user):
+    def get_subscribed(self,email_user):       
+        
         if not email_user in self.subscribers.keys():   
             raise ValueError("Usuário não inscrito")
 
         return self.subscribers[email_user]
 
 
-    def remove_subscribed(self,email_user):       
-        removed_subs = self.get_subscribed(email_user)    
-        
+    def remove_subscribed(self,email_user):               
+        removed_subs = self.get_subscribed(email_user)        
         self.subscribers.pop(email_user)
         return removed_subs              
 

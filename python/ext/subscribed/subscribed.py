@@ -1,4 +1,4 @@
-from flask import Blueprint, request,jsonify
+from flask import Blueprint, request,jsonify, abort
 from python.models.subscribed import Subscribed
 from python.controllers.subscribeds_controller import SubscribedsController
 from python.models.user import User
@@ -12,8 +12,13 @@ def init_app(app):
 
 @sub.route('/', methods = ['POST'])
 def add_sub():
-    data = request.get_json()  
-    subs = subsController.add_subscriber(data['name'],data['email'],data['discord_id'],data['period'],data['minority_group']) 
+    data = request.get_json()
+    try:
+        subs = subsController.add_subscriber(data['name'],data['email'],data['discord_id'],data['period'],data['minority_group'])
+    except AttributeError:
+        abort(400,"Atributos inválidos")
+    except ValueError:
+        abort(400,"Email já em uso")
     return subs.__dict__
 
 @sub.route('/', methods = ['GET'])
@@ -27,28 +32,46 @@ def list_sub():
     return result
 
 @sub.route('/', methods = ['DELETE'])
-def remove_org():
-    data = request.get_json()    
-    return subsController.remove_subscribed(data['email_user']).to_json()
+def remove_sub():
+    data = request.get_json()
+    try:
+        result = subsController.remove_subscribed(data['email_user']).to_json()       
+    except ValueError:
+        abort(404,"Usuário não inscrito")
+    
+    return result
 
 @sub.route('/<string:email_sub>', methods = ['GET'])
-def get_org(email_sub):
+def get_sub(email_sub):
     data = email_sub + "@ccc.ufcg.edu.br"
-    print(data)
-    return subsController.get_subscribed(data).to_json()
+    try: 
+        result = subsController.get_subscribed(data).to_json()
+    except ValueError:
+        abort(404, "Usuário não inscrito")
+    return result
 
 @sub.route('/<string:email_sub>', methods = ['POST'])
-def modify_org(email_sub):
+def modify_sub(email_sub):
     email_sub = email_sub + "@ccc.ufcg.edu.br"
     data = request.get_json()
-    print(email_sub)
-    subsController.modify_subscribed_by_attribute(email_sub, data['attribute'],data['new_attribute'])
+    try:
+        subsController.modify_subscribed_by_attribute(email_sub, data['attribute'],data['new_attribute'])    
+    except AttributeError:
+        abort(400,"Atributos inválidos")
+    except ValueError:
+        abort(404,"Usuário não inscrito")    
+
     return subsController.get_subscribed(email_sub).to_json()
+    
 
 @sub.route('/search', methods = ['GET'])
 def search_sub():
     data = request.get_json()
-    founds = subsController.find_subscribed_by_attribute(data['attribute'],data['value_attribute'])
+    try:
+        founds = subsController.find_subscribed_by_attribute(data['attribute'],data['value_attribute'])
+    except AttributeError:
+        abort(400,"Atributos inválidos")
+    
     result = {}
 
     for i in range (len(founds)):
