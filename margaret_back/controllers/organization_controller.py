@@ -1,7 +1,6 @@
-#coding: utf-8
-from python.models.organization import Organization
-from python.util.validation import validate_organization_existence
+from margaret_back.models.organization import Organization
 import re
+
 
 class OrganizationController:
     def __init__(self):
@@ -27,8 +26,9 @@ class OrganizationController:
             raise ValueError('Organização Inexistente')
         return self.organizations[org_id]
 
-    def modify_organization_by_atribute(self, org_id, atribute, new_atribute_value):
-        if not atribute in ['name', 'desc', 'owner', 'category', 'state']:
+    def modify_organization_by_atribute(self, org_id, atribute,
+                                        new_atribute_value):
+        if atribute not in ['name', 'desc', 'owner', 'category', 'state']:
             raise AttributeError('Atributo Inválido')
 
         organization = self.get_organization(org_id)
@@ -36,18 +36,19 @@ class OrganizationController:
         return organization
 
     def find_organization_by_atribute(self, atribute, atribute_value):
-        if not atribute in ['name', 'category', 'state', 'owner']:
+        if atribute not in ['name', 'category', 'state', 'owner']:
             raise AttributeError('Atributo Inválido')
-        
+
         find_result = []
 
         for key in self.organizations:
             organization = self.organizations[key]
             organizationAtribute = getattr(organization, atribute).lower()
-            
-            if organizationAtribute == atribute_value.lower() or re.search(atribute_value.lower(), organizationAtribute) != None:
+
+            if organizationAtribute == atribute_value.lower() or re.search(
+                    atribute_value.lower(), organizationAtribute) is not None:
                 find_result.append(organization)
-        
+
         return find_result
 
     def generate_organization_id(self):

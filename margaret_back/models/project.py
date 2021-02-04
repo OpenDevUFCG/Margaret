@@ -1,7 +1,8 @@
 # coding: utf-8
 
 class Project:
-    def __init__(self, name, description, mentor, aux_mentor, base_text, areas):
+    def __init__(self, name, description, mentor, aux_mentor, base_text,
+                 areas):
         self.name = name
         self.description = description
         self.base_text = base_text
@@ -20,7 +21,9 @@ class Project:
         # Modificar depois
         for area in areas:
             area = area.lower()
-            if area in ['front', 'back', 'cloud', 'testes', 'documentação', 'refactoring', 'design', 'análise de dados', 'scrapping', 'automação', 'bot', 'devops']:
+            if area in ['front', 'back', 'cloud', 'testes', 'documentação',
+                        'refactoring', 'design', 'análise de dados',
+                        'scrapping', 'automação', 'bot', 'devops']:
                 self._areas = areas
             else:
                 raise Exception('Área Inválida')
@@ -32,7 +35,8 @@ class Project:
     @state.setter
     def state(self, state):
         state = state.title()
-        if not (state in ['Em Análise', 'Necessita Revisão', 'Pronto - Com Sugestões', 'Pronto - Completo']):
+        if not (state in ['Em Análise', 'Necessita Revisão',
+                          'Pronto - Com Sugestões', 'Pronto - Completo']):
             raise Exception('Estado Inválido')
         self._state = state
 

@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/home/juan/.cache/pypoetry/virtualenvs/margaret-back-UlYTqVjv-py3.8/bin/python3.8",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
+}
