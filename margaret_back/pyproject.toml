@@ -13,6 +13,11 @@ flask-restx = "^0.2.0"
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
 autopep8 = "^1.5.5"
+poethepoet = "^0.9.0"
+
+[tool.poe.tasks]
+requirements = "poetry export -f requirements.txt --output requirements.txt"
+lint = "autopep8 . --recursive --in-place --pep8-passes 2000 --verbose"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
