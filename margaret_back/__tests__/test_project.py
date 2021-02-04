@@ -1,15 +1,18 @@
-#coding: utf-8
-from python.models.project import Project
+from margaret_back.models.project import Project
+
 
 def test_check_email():
 
-    proj = Project("projeto", "desc", {"email": "mentor@gmail.com"}, "", "", ["back"])
+    proj = Project("projeto", "desc", {
+                   "email": "mentor@gmail.com"}, "", "", ["back"])
 
     assert proj.check_email("mentor@gmail.com")
 
+
 def test_add_subscriber():
 
-    proj = Project("projeto", "", {"email": "mentor@gmail.com"}, "", "", ["back"])
+    proj = Project("projeto", "", {
+                   "email": "mentor@gmail.com"}, "", "", ["back"])
 
     proj.add_subscriber(1, "gabrielly")
 
@@ -23,25 +26,26 @@ def test_add_subscriber():
 
     assert proj.get_subscriber(3) == "huandrey"
 
+
 def test_area_setter():
 
-    proj = Project("projeto", "", {"email": "mentor@gmail.com"}, "", "", ["back"])
+    proj = Project("projeto", "", {
+                   "email": "mentor@gmail.com"}, "", "", ["back"])
 
     try:
         proj.area = "aleatorio"
         assert False
-    except:
+    except Exception:
         assert True
+
 
 def test_state_setter():
 
-    proj = Project("projeto", "", {"email": "mentor@gmail.com"}, "", "", ["back"])
+    proj = Project("projeto", "", {
+                   "email": "mentor@gmail.com"}, "", "", ["back"])
 
     try:
         proj.state = "aleatorio"
         assert False
-    except:
+    except Exception:
         assert True
-
-
-

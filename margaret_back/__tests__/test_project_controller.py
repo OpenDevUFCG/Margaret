@@ -1,5 +1,5 @@
-from python.controllers.project_controller import ProjectController
-from python.models.mentor import Mentor
+from margaret_back.controllers.project_controller import ProjectController
+from margaret_back.models.mentor import Mentor
 from pytest import fail
 
 
@@ -77,7 +77,7 @@ def test_remove_project_area():
     collections.remove_project_area(1, 'cloud')
     project = collections.projects[1]
 
-    assert not 'cloud' in project.areas
+    assert 'cloud' not in project.areas
 
 
 def test_remove_project():
@@ -98,7 +98,8 @@ def test_find_project_by_mentor():
     mentor = Mentor('Juan', 'juan.barros@ccc.ufcg.edu.br',
                     'Juan#3245', '', 'OpenDevUFCG')
     aux_mentor = Mentor(
-        'Matheus', 'matheus.alves@ccc.ufcg.edu.br', 'Alves#3245', '', 'OpenDevUFCG')
+        'Matheus', 'matheus.alves@ccc.ufcg.edu.br', 'Alves#3245', '',
+        'OpenDevUFCG')
 
     collections.add_project('Margaret', '', mentor, aux_mentor,
                             '', ['back', 'documentação', 'testes'])
@@ -109,5 +110,5 @@ def test_find_project_by_mentor():
         collections.find_project_by_mentor(
             'joao.ribeiro@ccc.ufcg.edu.br')
         fail("Foi encontrado um mentor nao cadastrado")
-    except:
+    except Exception:
         assert True

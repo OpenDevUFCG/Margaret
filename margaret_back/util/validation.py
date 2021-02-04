@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import re
 
+
 def email_validation(email):
     if isinstance(email, str):
-
-        regex = r'^[a-z]+[\._]?[a-z]+[@]{1}[c]{3}[.][c-u]{4}[.][d-u]{3}[.][b-r]{2}$'
-        if re.search(regex, email) != None:
+        regex = r'^[a-z]+[\._]?[a-z]+[@]{1}[c]{3}[.][c-u]{4}[.][d-u]{3}[.]'\
+            + r'[b-r]{2}$'
+        if re.search(regex, email) is not None:
             return email
 
     raise AttributeError('Email inválido!')
@@ -16,7 +17,8 @@ def period_validation(period):
         periodFormat = period.split(".")
         r = r'^[0-9]{4}$'
 
-        if re.search(r, periodFormat[0]) != None and 2 >= int(periodFormat[1]) > 0:
+        if re.search(r, periodFormat[0]) is not None and \
+                2 >= int(periodFormat[1]) > 0:
             return period
     raise AttributeError("Período inválido!")
 
@@ -31,10 +33,11 @@ def discord_id_validation(value):
         numbers = value.split("#")
         regexNumbers = r'^[0-9]{4}$'
 
-        if  re.search(regexNumbers,numbers[1]) != None:
+        if re.search(regexNumbers, numbers[1]) is not None:
             return value
-        
-    raise AttributeError ("Discord inválido!")
+
+    raise AttributeError("Discord inválido!")
+
 
 def validate_organization_existence(org_id, organizations):
     if not(org_id in organizations):
