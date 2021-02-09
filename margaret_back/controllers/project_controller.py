@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from python.models.project import Project
+from margaret_back.models.project import Project
 
 
 class ProjectController:
@@ -8,7 +8,8 @@ class ProjectController:
         self.projects = dict()
         self.current_id = 0
 
-    def add_project(self, name, description, base_text, mentor, mentor_aux, areas):
+    def add_project(self, name, description, base_text, mentor, mentor_aux,
+                    areas):
         project_id = 1
         for _ in self.projects:
             project_id += 1
