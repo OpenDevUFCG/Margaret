@@ -1,6 +1,8 @@
-from flask import Blueprint, request, abort
+from flask import Blueprint, request, jsonify, abort
+from margaret_back.models.subscribed import Subscribed
 from margaret_back.controllers.subscribeds_controller import \
     SubscribedsController
+from margaret_back.models.user import User
 import json
 
 sub = Blueprint('sub', __name__, url_prefix='/subscribed')
@@ -16,8 +18,8 @@ def add_sub():
     data = request.get_json()
     try:
         subs = subsController.add_subscriber(
-            data['name'], data['email'], data['discord_id'], data['period'],
-            data['minority_group'])
+            data['name'], data['email'], data['discord_id'],
+            data['period'], data['minority_group'])
     except AttributeError:
         abort(400, "Atributos inválidos")
     except ValueError:
@@ -40,7 +42,7 @@ def list_sub():
 def remove_sub():
     data = request.get_json()
     try:
-        result = subsController.remove_subscribed(data['email_user']).to_json()
+        result = subsController.remove_subscribed(data['email_user']).__dict__
     except ValueError:
         abort(404, "Usuário não inscrito")
 
@@ -51,7 +53,7 @@ def remove_sub():
 def get_sub(email_sub):
     data = email_sub + "@ccc.ufcg.edu.br"
     try:
-        result = subsController.get_subscribed(data).to_json()
+        result = subsController.get_subscribed(data).__dict__
     except ValueError:
         abort(404, "Usuário não inscrito")
     return result
@@ -69,7 +71,7 @@ def modify_sub(email_sub):
     except ValueError:
         abort(404, "Usuário não inscrito")
 
-    return subsController.get_subscribed(email_sub).to_json()
+    return subsController.get_subscribed(email_sub).__dict__
 
 
 @sub.route('/search', methods=['GET'])

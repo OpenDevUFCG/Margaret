@@ -17,7 +17,7 @@ poethepoet = "^0.9.0"
 
 [tool.poe.tasks]
 requirements = "poetry export -f requirements.txt --dev --output requirements.txt"
-lint = "autopep8 . --recursive --in-place --pep8-passes 2000 --verbose"
+lint = "autopep8 . --recursive --in-place --verbose -a -a"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
