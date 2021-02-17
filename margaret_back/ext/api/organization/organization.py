@@ -3,30 +3,18 @@ from flask import request
 from margaret_back.controllers.organization_controller import \
     OrganizationController
 from margaret_back.models.user import User
+from margaret_back.models.organization import organization_schema
 
 
 organization = Namespace('Organization', description='')
 
 organization_controller = OrganizationController()
 
-user_model = organization.model('User', {
-    'owner': fields.String,
-    'email': fields.String,
-    'discord_id': fields.String,
-})
-
-organization_model = organization.model('OrganizationList', {
-    "owner": fields.Nested(user_model),
-    "name":  fields.String,
-    "desc":  fields.String,
-    "category":  fields.String,
-})
-
 
 @organization.route("/")
 class Organization(Resource):
 
-    @organization.marshal_list_with(organization_model)
+    @organization.marshal_list_with(organization_schema)
     def get(self):
         response = {}
         return organization_controller.list_organizations()

@@ -1,5 +1,16 @@
 import json
 
+from flask_restx import fields, Model
+from margaret_back.models.user import user_schema
+
+
+organization_schema = Model('OrganizationList', {
+    "owner": fields.Nested(user_schema),
+    "name":  fields.String,
+    "desc":  fields.String,
+    "category":  fields.String,
+})
+
 
 class Organization:
 

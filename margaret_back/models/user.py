@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from margaret_back.util import validation
+from flask_restx import fields, Model
+
+user_schema = Model('User', {
+    'owner': fields.String,
+    'email': fields.String,
+    'discord_id': fields.String,
+})
 
 
 class User:
