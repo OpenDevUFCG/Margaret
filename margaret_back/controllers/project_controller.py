@@ -17,6 +17,7 @@ class ProjectController:
 
         project = Project(name, description, base_text,
                           mentor, mentor_aux, areas)
+                          
         self.projects[project_id] = project
         return project_id
 
@@ -48,10 +49,13 @@ class ProjectController:
     def update_project_value(self, current_id, key, new_value):
         if current_id in self.projects:
             project = self.projects[current_id]
-            setattr(project, key, new_value)
-            return project
+            if key in project.__dict__:
+                setattr(project, key, new_value)
+                return project
+            else:
+                raise AttributeError
         else:
-            raise Exception('Index Error')
+            raise IndexError
 
     def add_project_area(self, current_id, new_area):
         if current_id in self.projects:
@@ -70,7 +74,7 @@ class ProjectController:
             except ValueError as e:
                 return e
         else:
-            raise Exception('Index Error')
+            raise IndexError
 
     def remove_project(self, current_id):
         if current_id in self.projects:
@@ -78,7 +82,7 @@ class ProjectController:
             del self.projects[current_id]
             return project
         else:
-            raise Exception('Index Error')
+            raise IndexError
 
     def find_project_by_mentor(self, email_mentor):
         found_projects = {}

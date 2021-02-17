@@ -1,7 +1,8 @@
 # coding: utf-8
+import json
 
 class Project:
-    def __init__(self, name, description, mentor, aux_mentor, base_text,
+    def __init__(self, name, description, base_text, mentor, aux_mentor,
                  areas):
         self.name = name
         self.description = description
@@ -56,3 +57,6 @@ class Project:
 
     def check_mentor_by_email(self, email):
         return self.mentor.email == email or self.aux_mentor.email == email
+
+    def to_json(self):
+            return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
