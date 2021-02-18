@@ -9,7 +9,7 @@ def email_validation(email):
         if re.search(regex, email) is not None:
             return email
 
-    raise AttributeError('Email inválido!')
+    raise AttributeError('Email inválido: ' + email)
 
 
 def period_validation(period):
