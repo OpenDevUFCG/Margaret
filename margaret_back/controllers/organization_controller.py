@@ -10,9 +10,9 @@ class OrganizationController:
     def list_organizations(self):
         return list(self.organizations.values())
 
-    def add_organization(self, name, desc, owner, category):
+    def add_organization(self, args):
         org_id = self.generate_organization_id()
-        organization = Organization(name, desc, owner, category, org_id)
+        organization = Organization(**{**args, "org_id": org_id})
         self.organizations[org_id] = organization
         return org_id
 

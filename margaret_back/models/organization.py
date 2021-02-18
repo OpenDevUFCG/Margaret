@@ -1,23 +1,25 @@
 import json
 
 from flask_restx import fields, Model
-from margaret_back.models.user import user_schema
 
 
 organization_schema = Model('OrganizationList', {
-    "owner": fields.Nested(user_schema),
+    "email_owner": fields.String,
     "name":  fields.String,
-    "desc":  fields.String,
+    "description":  fields.String,
     "category":  fields.String,
 })
+
+category_valids = ('laboratório', 'organização estudantil',
+                   'externa')
 
 
 class Organization:
 
-    def __init__(self, name, desc, owner, category, org_id):
+    def __init__(self, name, description, email_owner, category, org_id):
         self.name = name
-        self.desc = desc
-        self.owner = owner
+        self.description = description
+        self.email_owner = email_owner
         self._category = category
         self.org_id = org_id
         self._state = "Em análise"
@@ -29,9 +31,7 @@ class Organization:
 
     @category.setter
     def category(self, category):
-        if not (category in ['laboratório', 'organização estudantil',
-                             'externa'
-                             ]):
+        if not (category in category_valids):
             raise ValueError('Categoria Inválida')
         self._category = category
 
