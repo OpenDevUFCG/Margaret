@@ -15,15 +15,15 @@ class MentorController:
     def list_mentor(self):
         return self.mentors.values()
 
-    def find_mentors_by_attribute(self, attribute, value_attribute):
-        if attribute.lower() not in ['name', 'email', 'discord', 'state',
+    def find_mentors_by_attribute(self, args):
+        if args['attribute'].lower() not in ['name', 'email', 'discord', 'state',
                                      'organization']:
             raise AttributeError("Atributo inválido")
 
         found_mentors = []
 
         for mentor in self.mentors.values():
-            if value_attribute.lower() == getattr(mentor, attribute).lower():
+            if args['value'].lower() == getattr(mentor, args['atribute']).lower():
                 found_mentors.append(mentor)
         return found_mentors
 
