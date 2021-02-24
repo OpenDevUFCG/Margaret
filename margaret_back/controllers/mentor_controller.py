@@ -15,15 +15,15 @@ class MentorController:
     def list_mentor(self):
         return self.mentors.values()
 
-    def find_mentors_by_attribute(self, attribute, value_attribute):
-        if attribute.lower() not in ['name', 'email', 'discord', 'state',
+    def find_mentors_by_attribute(self, args):
+        if args['attribute'].lower() not in ['name', 'email', 'discord', 'state',
                                      'organization']:
             raise AttributeError("Atributo inválido")
 
         found_mentors = []
 
         for mentor in self.mentors.values():
-            if value_attribute.lower() in getattr(mentor, attribute):
+            if args['value'].lower() == getattr(mentor, args['atribute']).lower():
                 found_mentors.append(mentor)
         return found_mentors
 
@@ -33,11 +33,15 @@ class MentorController:
             raise AttributeError("Atributo inválido")
 
         self.validate_mentor_existence(email_user)
-        setattr(self.mentors[email_user], attribute, new_attribute)
+        user = self.mentors[email_user]
+        setattr(user, attribute, new_attribute)
+        return user
 
     def remove_mentor(self, email_user):
         self.validate_mentor_existence(email_user)
+        mentor = self.mentors[email_user]
         del self.mentors[email_user]
+        return mentor
 
     def validate_mentor_existence(self, email_user):
         if email_user not in self.mentors.keys():
